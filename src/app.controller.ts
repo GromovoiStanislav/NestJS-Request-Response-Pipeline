@@ -11,7 +11,11 @@ import {
 } from '@nestjs/common';
 import { Req, SetMetadata } from '@nestjs/common/decorators';
 import { AppService } from './app.service';
-import { SetParams, SetParam } from './decorators/set-param.decorator';
+import {
+  SetArrayParam,
+  SetManyParams,
+  SetOneParam,
+} from './decorators/set-param.decorator';
 import { ParamGuard1, ParamGuard2, ParamGuard3 } from './guards/param.guard';
 import { FreezePipe } from './pipes/freeze.pipe';
 //import { AuthGuard } from './guards/auth.guard';
@@ -44,9 +48,11 @@ export class AppController {
 
   //@UseGuards(ParamGuard1('Parameter 1'))
   //@UseGuards(ParamGuard2('Parameter 2'))
-  //@SetMetadata('param', 'Parameter 3')
-  @SetParams('Parameter 3')
-  //@SetParam('Parameter 3')
+  @SetMetadata('param1', 'Parameter 1')
+  @SetMetadata('param2', 'Parameter 2')
+  //@SetManyParams('Parameter 3.1', 'Parameter 3.2', 'Parameter 3.3')
+  @SetArrayParam(['Parameter 3.1', 'Parameter 3.2', 'Parameter 3.3'])
+  //@SetOneParam('Parameter 3')
   @UseGuards(ParamGuard3)
   @Get('param')
   getParamToGuard(@Req() req) {

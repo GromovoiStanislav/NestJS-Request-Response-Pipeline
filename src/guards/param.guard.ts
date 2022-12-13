@@ -54,12 +54,17 @@ export class ParamGuard3 implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const param = this.reflector.get<string>('param', context.getHandler());
+    const param1 = this.reflector.get<string>('param1', context.getHandler());
+    const param2 = this.reflector.get<string>('param2', context.getHandler());
 
     const request = context.switchToHttp().getRequest();
     if (!request.locals) {
       request.locals = {};
     }
     request.locals.param3 = param;
+    request.locals.param1 = param1;
+    request.locals.param2 = param2;
+
     return true;
   }
 }
