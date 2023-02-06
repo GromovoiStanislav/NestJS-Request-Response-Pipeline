@@ -11,17 +11,20 @@ import {
 } from '@nestjs/common';
 import { Req, SetMetadata } from '@nestjs/common/decorators';
 import { AppService } from './app.service';
+import { Roles } from './decorators/roles.decorator copy';
 import {
   SetArrayParam,
   SetManyParams,
   SetOneParam,
 } from './decorators/set-param.decorator';
 import { ParamGuard1, ParamGuard2, ParamGuard3 } from './guards/param.guard';
+import { RolesGuard } from './guards/roles.guard';
 import { FreezePipe } from './pipes/freeze.pipe';
 //import { AuthGuard } from './guards/auth.guard';
 //import { LoggingInterceptor } from './interceptors/logging.interceptor';
 ////import { HttpExceptionFilter } from './filters/http-exeception.filter';
 
+@UseGuards(RolesGuard)
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -57,5 +60,11 @@ export class AppController {
   @Get('param')
   getParamToGuard(@Req() req) {
     return req.locals;
+  }
+
+
+  @Roles('admin')
+  getforAdmin(){
+    return 'Message only for admin'
   }
 }
