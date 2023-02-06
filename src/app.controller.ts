@@ -64,6 +64,7 @@ export class AppController {
 
 
   @Roles('admin')
+  @Get('admin')
   getforAdmin(){
     return 'Message only for admin'
   }
